@@ -99,6 +99,10 @@ create procedure Empresa.delete_relacao_projeto_funcionario(query JSON)
 	END $$
 delimiter ;
 
-/*call Empresa.create_relacao_projeto_funcionario('{"Projeto_id": 2, "Funcionario_id": 2, "Carga_horaria": 20.5}');*/
-call Empresa.update_relacao_projeto_funcionario('{"Relacao_id": 3,"Funcionario_id": 1, "Carga_horaria": 14.5}');
+call Empresa.create_relacao_projeto_funcionario('{"Projeto_id": 2, "Funcionario_id": 2, "Carga_horaria": 20.5}');
+call Empresa.create_relacao_projeto_funcionario('{"Projeto_id": 1, "Funcionario_id": 2, "Carga_horaria": 5.5}');
+call Empresa.create_relacao_projeto_funcionario('{"Projeto_id": 2, "Funcionario_id": 1, "Carga_horaria": 7.5}');
+call Empresa.read_relacao_projeto_funcionario('{"Relacao_id": 2}');
+call Empresa.update_relacao_projeto_funcionario('{"Relacao_id": 3, "Carga_horaria": 14.5}');
+call Empresa.delete_relacao_projeto_funcionario('{"Relacao_id": 2}');
 SELECT * FROM Empresa.Relacoes_projetos_funcionarios;

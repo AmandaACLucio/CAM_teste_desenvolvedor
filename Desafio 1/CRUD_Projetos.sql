@@ -137,9 +137,13 @@ create procedure Empresa.delete_projeto(query JSON)
 delimiter ;
 
 
-/*call Empresa.create_projeto('{"Departamento_id": 1, "Supervisor_id": 1, "Nome": "CAM Back",  
+call Empresa.create_projeto('{"Departamento_id": 1, "Supervisor_id": 1, "Nome": "CAM Back",  
 "Horas_conclusao": 54.5, "Prazo_estimado": "14-6-2023", "Horas_realizadas": 20.5, "Ultimo_calculo_horas": "14-1-2023"}');
 call Empresa.create_projeto('{"Departamento_id": 2, "Supervisor_id": 3, "Nome": "CAM Front",  
-"Horas_conclusao": 37.5, "Prazo_estimado": "14-5-2023", "Horas_realizadas": 18.5, "Ultimo_calculo_horas": "11-1-2023"}');*/
+"Horas_conclusao": 37.5, "Prazo_estimado": "14-5-2023", "Horas_realizadas": 18.5, "Ultimo_calculo_horas": "11-1-2023"}');
+call Empresa.create_projeto('{"Departamento_id": 2, "Supervisor_id": 2, "Nome": "CAM Integration",  
+"Horas_conclusao": 27.5, "Prazo_estimado": "21-4-2023", "Horas_realizadas": 19.5, "Ultimo_calculo_horas": "9-1-2023"}');
+call Empresa.read_projeto('{"Projeto_id": 1}');
 call Empresa.update_projeto('{"Projeto_id": 2, "Departamento_id": 3, "Supervisor_id": 3}');
+call Empresa.delete_projeto('{"Projeto_id": 3}');
 SELECT * FROM Empresa.Projetos;

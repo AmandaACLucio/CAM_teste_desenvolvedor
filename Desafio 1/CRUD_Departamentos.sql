@@ -76,4 +76,8 @@ delimiter ;
 call Empresa.create_departamento('{"Nome": "Estratégia"}');
 call Empresa.create_departamento('{"Nome": "Gestão"}');
 call Empresa.create_departamento('{"Nome": "Finanças"}');
+call Empresa.create_departamento('{"Nome": "Recursos Humanos"}');
+call Empresa.read_departamento('{"Departamento_id": 1}');
+call Empresa.update_departamento('{"Departamento_id": 1, "Nome": "Estratégia e Gestão"}');
+call Empresa.delete_departamento('{"Departamento_id": 2}');
 SELECT * FROM Empresa.Departamentos;
