@@ -1,4 +1,5 @@
 ﻿from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
 from .models import Funcionario
 
@@ -53,3 +54,11 @@ class FuncionarioSerializer(serializers.ModelSerializer):
             'Salario',
             'Carga_horaria'
         )
+
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Funcionario.objects.all(),
+                fields=['Nome', 'CPF', 'RG'],
+                message="Já existe um funcionário com esse nome, CPF ou RG"
+            )
+        ]

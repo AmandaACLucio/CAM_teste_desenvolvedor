@@ -1,4 +1,5 @@
 ﻿from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
 from .models import Departamento
 
@@ -23,3 +24,11 @@ class DepartamentoSerializer(serializers.ModelSerializer):
             'Departamento_id',
             'Nome'
         )
+
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Departamento.objects.all(),
+                fields=['Nome'],
+                message="Já existe um departamento com esse nome"
+            )
+        ]

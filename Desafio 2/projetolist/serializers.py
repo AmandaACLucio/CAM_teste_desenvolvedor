@@ -1,4 +1,5 @@
 ﻿from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
 from .models import Projeto
 
@@ -49,3 +50,11 @@ class ProjetoSerializer(serializers.ModelSerializer):
             'Horas_realizadas',
             'Ultimo_calculo_horas'
         )
+
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Projeto.objects.all(),
+                fields=['Nome'],
+                message="Já existe um projeto com esse nome"
+            )
+        ]
