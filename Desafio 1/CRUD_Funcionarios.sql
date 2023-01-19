@@ -28,7 +28,7 @@ create procedure Empresa.create_funcionario(query JSON)
         AND (value_possui_habilitacao is not null) AND (value_salario is not null) 
         AND (value_carga_horaria is not null) then
 
-            INSERT INTO Empresa.Funcionarios (Nome,CPF, RG, SEXO, Data_nascimento, Possui_habilitacao, 
+            INSERT INTO Empresa.Funcionarios (Nome,CPF, RG, Sexo, Data_nascimento, Possui_habilitacao, 
             Salario, Carga_horaria) 
             VALUES (value_nome, value_cpf, value_rg, value_sexo, value_data_nascimento, value_possui_habilitacao,
             value_salario, value_carga_horaria);
@@ -98,7 +98,7 @@ create procedure Empresa.update_funcionario(query JSON)
 			end if;
 
 			if(value_sexo is null) then
-				SELECT SEXO INTO value_sexo FROM Empresa.Funcionarios
+				SELECT Sexo INTO value_sexo FROM Empresa.Funcionarios
 				WHERE Funcionario_id = value_funcionario_id;
 			end if;
 
@@ -123,7 +123,8 @@ create procedure Empresa.update_funcionario(query JSON)
 			end if;
 
             UPDATE Empresa.Funcionarios SET Nome = value_nome, CPF=value_cpf, RG=value_rg, 
-            SEXO=value_sexo, Data_nascimento=value_data_nascimento, Possui_habilitacao=value_possui_habilitacao, 
+            Sexo=value_sexo, Data_nascimento=value_data_nascimento,
+			Possui_habilitacao=value_possui_habilitacao, 
             Salario=value_salario, Carga_horaria=value_carga_horaria
             WHERE Funcionario_id = value_funcionario_id;
             

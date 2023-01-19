@@ -48,7 +48,7 @@ CREATE TABLE Empresa.Funcionarios (
     Nome varchar(255) UNIQUE,
     CPF varchar(255) UNIQUE,
     RG varchar(255) UNIQUE,
-    SEXO varchar(255),
+    Sexo varchar(255),
     Data_nascimento date,
     Possui_habilitacao boolean,
     Salario float,

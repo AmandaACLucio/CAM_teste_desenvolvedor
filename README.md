@@ -93,4 +93,29 @@
 ## Desafio 2
 
 ### Instalações
+- python 3
 - pip3 install django
+- pip3 install djangorestframework
+- pip3 install pymysql
+- pip3 install django-cors-headers
+- mysql> CREATE DATABASE IF NOT EXISTS Empresa;
+
+### Inserindo models no BD
+- Dentro da pasta Desafio 2
+    - ```shell
+    python manage.py makemigrations departamentolist
+    python manage.py makemigrations funcionariolist
+    python manage.py makemigrations projetolist
+    python manage.py makemigrations relacaolist
+    python manage.py migrate
+    ```
+
+### End-Points
+- api/departamentos
+- api/departamentos/<int:Departamento_id>
+- api/funcionarios
+- api/funcionarios/<int:Funcionario_id>
+- api/projetos
+- api/projetos/<int:Funcionario_id>
+- api/relacoes
+- api/relacoes/<int:Relacao_id>
