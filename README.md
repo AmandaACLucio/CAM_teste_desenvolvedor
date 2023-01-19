@@ -119,3 +119,5 @@
 - api/projetos/<int:Funcionario_id>
 - api/relacoes
 - api/relacoes/<int:Relacao_id>
+
+![Testando API no Postman](https://github.com/AmandaACLucio/CAM_teste_desenvolvedor/blob/master/Desafio_2/Modelagem.png)
