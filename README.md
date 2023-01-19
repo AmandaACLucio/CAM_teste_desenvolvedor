@@ -102,13 +102,13 @@
 
 ### Inserindo models no BD
 - Dentro da pasta Desafio 2
-    - ```shell
-    python manage.py makemigrations departamentolist
-    python manage.py makemigrations funcionariolist
-    python manage.py makemigrations projetolist
-    python manage.py makemigrations relacaolist
-    python manage.py migrate
-    ```
+```shell
+python manage.py makemigrations departamentolist
+python manage.py makemigrations funcionariolist
+python manage.py makemigrations projetolist
+python manage.py makemigrations relacaolist
+python manage.py migrate
+```
 
 ### End-Points
 - api/departamentos
@@ -120,4 +120,4 @@
 - api/relacoes
 - api/relacoes/<int:Relacao_id>
 
-![Testando API no Postman](https://github.com/AmandaACLucio/CAM_teste_desenvolvedor/blob/master/Desafio%202/Modelagem.png)
+![Testando API no Postman](https://github.com/AmandaACLucio/CAM_teste_desenvolvedor/blob/master/Desafio%202/Postman.png)
