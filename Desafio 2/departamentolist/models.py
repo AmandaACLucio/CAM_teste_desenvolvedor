@@ -6,7 +6,7 @@ class Departamento(models.Model):
     Nome = models.CharField(unique=True, max_length=200, null=False, blank=False)
 
     def __str__(self):
-        return {"Nome": self.Nome}
+        return str({"Nome": self.Nome})
 
     class Meta:
         db_table = 'Departamentos'

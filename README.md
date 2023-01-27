@@ -1,7 +1,15 @@
 ﻿# Desafio Back-end
 
+- [Interpretação](#Interpretação)
 - [Desafio 1](#Desafio1)
 - [Desafio 2](#Desafio2)
+
+
+## Interpretaçao
+
+Interpretando o problema foi notada que a quantidade de horas que um funcionário trabalha é igual a soma da quantidade de horas de projetos os quais ele superviosiona, juntamente com com a quantidade de horas de projetos os quais ele é funcionário. Sendo assim, são necessárias tabelas auxiliares para determinar a carga-horária dedicada a cada projeto supervisionada ou o qual o funcionário trabalho.
+
+Na tabela Projetos temos que que a quantidade de horas realizadas no projeto igual a quantidade à soma de horas de trabalho realizadas pelos funcionários (somente, sem o supervisor), dividido pelo número de semanas passadas desde a data do último cálculo, registrada no campo Ultimo_calculo_horas.
 
 ## Desafio 1
 
@@ -12,7 +20,7 @@
     - Funcionários: Tabela para armazenas os dados dos funcionários existentes.
     - Projetos: Tabela para armazenar os dados dos projetos existentes, contendo duas chaves estrangeiras, uma para o funcionário supervisor e outra para o departamento correspondente.
     - Relacoes_projetos_funcionarios: Tabela utilizar para armazenas as relações entre os funcionários e projetos, assim como a carga horária destinada pelo funcionário para o dado projeto.
-
+    - Relacoes_projetos_supervisores: Tabela utilizar para armazenas as relações entre os supervisores e projetos, assim como a carga horária destinada pelo supervisor para um dado projeto. Cada projeto tem um único supervisor.
     ![Modelagem de dados do BD](https://github.com/AmandaACLucio/CAM_teste_desenvolvedor/blob/master/Modelagem.png)
 
 
@@ -70,7 +78,8 @@
     ```sql
     call Empresa.delete_projeto('{"Projeto_id": 3}');
     ```
-- CRUD_Relacoes_projetos_funcionarios..sql: Arquivo contendo as procedures da tabela Relacoes_projetos_funcionarios.:
+
+- CRUD_Relacoes_projetos_funcionarios.sql: Arquivo contendo as procedures da tabela Relacoes_projetos_funcionarios:
     - Empresa.create_relacao_projeto_funcionario: Insere dados no BD
     ```sql
     call Empresa.create_relacao_projeto_funcionario('{"Projeto_id": 2, "Funcionario_id": 2, "Carga_horaria": 20.5}');    
@@ -88,6 +97,23 @@
     call Empresa.delete_relacao_projeto_funcionario('{"Relacao_id": 2}');
     ```
 
+- CRUD_Relacoes_projetos_supervisores.sql: Arquivo contendo as procedures da tabela Relacoes_projetos_supervisores.:
+    - Empresa.create_relacao_projeto_supervisor: Insere dados no BD
+    ```sql
+    call Empresa.create_relacao_projeto_supervisor('{"Projeto_id": 2, "Supervisor_id": 2, "Carga_horaria": 20.5}');    
+    ```
+    - Empresa.read_departamento: Leitura de dados no BD através da chave primária *departamento_id*
+    ```sql
+    call Empresa.read_relacao_projeto_supervisor('{"Relacao_id": 1}');
+    ```
+    - Empresa.update_departamento: Atualiza um campo ou mais de um dado específicado através do campo *departamento_id*
+    ```sql
+    call Empresa.update_relacao_projeto_supervisor('{"Relacao_id": 3, "Carga_horaria": 14.5}');    
+    ```
+    - Empresa.delete_departamento: Deleção de dados no BD através da chave primária *departamento_id*
+    ```sql
+    call Empresa.delete_relacao_projeto_supervisor('{"Relacao_id": 2}');
+    ```
 
 
 ## Desafio 2
@@ -111,13 +137,15 @@ python manage.py migrate
 ```
 
 ### End-Points
-- api/departamentos
+- api/departamentos/
 - api/departamentos/<int:Departamento_id>
-- api/funcionarios
+- api/funcionarios/
 - api/funcionarios/<int:Funcionario_id>
-- api/projetos
+- api/projetos/
 - api/projetos/<int:Funcionario_id>
-- api/relacoes
-- api/relacoes/<int:Relacao_id>
+- api/relacoesprojetosfuncionarios/
+- api/relacoesprojetosfuncionarios/<int:Relacao_id>
+- api/relacoesprojetossupervisores/
+- api/relacoesprojetossupervisores/<int:Relacao_id>
 
 ![Testando API no Postman](https://github.com/AmandaACLucio/CAM_teste_desenvolvedor/blob/master/Desafio%202/Postman.png)

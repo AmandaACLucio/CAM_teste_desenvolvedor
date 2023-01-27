@@ -11,22 +11,27 @@ delimiter $$
 	drop PROCEDURE if exists Empresa.create_funcionario$$
 	drop PROCEDURE if exists Empresa.create_projeto$$
 	drop PROCEDURE if exists Empresa.create_relacao_projeto_funcionario$$
+	drop PROCEDURE if exists Empresa.create_relacao_projeto_supervisor$$
 
 	drop PROCEDURE if exists Empresa.read_projeto$$
 	drop PROCEDURE if exists Empresa.read_funcionario$$
 	drop PROCEDURE if exists Empresa.read_projeto$$
 	drop PROCEDURE if exists Empresa.read_relacao_projeto_funcionario$$
+	drop PROCEDURE if exists Empresa.read_relacao_projeto_supervisor$$
     
 	drop PROCEDURE if exists Empresa.update_projeto$$
 	drop PROCEDURE if exists Empresa.update_funcionario$$
 	drop PROCEDURE if exists Empresa.update_projeto$$
 	drop PROCEDURE if exists Empresa.update_relacao_projeto_funcionario$$
+	drop PROCEDURE if exists Empresa.update_relacao_projeto_supervisor$$
 
 	drop PROCEDURE if exists Empresa.delete_projeto$$
 	drop PROCEDURE if exists Empresa.delete_funcionario$$
 	drop PROCEDURE if exists Empresa.delete_projeto$$
 	drop PROCEDURE if exists Empresa.delete_relacao_projeto_funcionario$$
+	drop PROCEDURE if exists Empresa.delete_relacao_projeto_supervisor$$
     
+	drop TABLE if exists Empresa.Relacoes_projetos_supervisores$$
 	drop TABLE if exists Empresa.Relacoes_projetos_funcionarios$$
 	drop TABLE if exists Empresa.Projetos$$
 	drop TABLE if exists Empresa.Departamentos$$
@@ -77,4 +82,14 @@ CREATE TABLE Empresa.Relacoes_projetos_funcionarios(
     Carga_horaria float NOT NULL,
   	FOREIGN KEY (Projeto_id) REFERENCES Empresa.Projetos(Projeto_id) ON DELETE CASCADE,
 	FOREIGN KEY (Funcionario_id) REFERENCES Empresa.Funcionarios(Funcionario_id) ON DELETE CASCADE
+);
+
+/*Relacoes_projetos_funcionarios*/
+CREATE TABLE Empresa.Relacoes_projetos_supervisores(
+	Relacao_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Projeto_id int NOT NULL UNIQUE,
+    Supervisor_id int NOT NULL,
+    Carga_horaria float NOT NULL,
+  	FOREIGN KEY (Projeto_id) REFERENCES Empresa.Projetos(Projeto_id) ON DELETE CASCADE,
+	FOREIGN KEY (Supervisor_id) REFERENCES Empresa.Funcionarios(Funcionario_id) ON DELETE CASCADE
 );
