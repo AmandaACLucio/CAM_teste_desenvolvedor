@@ -11,30 +11,77 @@ class RelacaoProjetoFuncionario(models.Model):
     Funcionario = models.ForeignKey(Funcionario , on_delete=models.CASCADE)
     Carga_horaria = models.FloatField(null=False, blank=False)
 
+    #Função que caso o verbo seja DELETE, atualiza a carga horária exercida do funcionário e a carga horária restante do projeto
+    def delete(self, *args, **kwargs):
+        
+        funcionario = Funcionario.objects.get(Funcionario_id=self.Funcionario.Funcionario_id)
+        projeto = Projeto.objects.get(Projeto_id=self.Projeto.Projeto_id)
+
+        funcionario.Carga_horaria_exercida -= self.Carga_horaria
+        projeto.Horas_conclusao += self.Carga_horaria
+        projeto.Horas_totais_realizadas -= self.Carga_horaria
+        projeto.Horas_realizadas = projeto.Horas_totais_realizadas/projeto.Semanas_Passadas
+        projeto.Ultimo_calculo_horas = date.today()    
+        funcionario.save()
+        projeto.save()
+
+        super(RelacaoProjetoFuncionario, self).delete(*args, **kwargs)
+
     def save(self, *args, **kwargs):
 
-        #Verificar se a carga_horaria total do funcionario não ultrapassa a carga_horária estabelecida para o dado funcionário
-        
-        if(self.Funcionario.Carga_horaria < self.Funcionario.Carga_horaria_exercida+self.Carga_horaria):
-            raise APIException({"Erro": "A carga horária do funcionário ("+ str(self.Funcionario.Carga_horaria_exercida+self.Carga_horaria)+ ") ultrapassa a carga horária estabelecida para o mesmo ("+ str(self.Funcionario.Carga_horaria)+")"})
-        
-        self.Funcionario.Carga_horaria_exercida += self.Carga_horaria
+        funcionario = Funcionario.objects.get(Funcionario_id=self.Funcionario.Funcionario_id)
+        projeto = Projeto.objects.get(Projeto_id=self.Projeto.Projeto_id)
 
-        #Atualizando a tabela de projetos
+        #Verificar se o funcionário já está alocado no projeto
+        if (self.Relacao_id==None):
 
-        if(self.Projeto.Horas_conclusao-self.Carga_horaria < 0):
-            raise APIException({"Erro": "A carga horária da relação ultrapassa a carga horária restante para conclusão do projeto"})
+            #Verificar se a carga_horaria total do funcionario não ultrapassa a carga_horária estabelecida para o dado funcionário
+            
+            if(funcionario.Carga_horaria < funcionario.Carga_horaria_exercida+self.Carga_horaria):
+                raise APIException({"Erro": "A carga horária do funcionário ("+ str(self.Funcionario.Carga_horaria_exercida+self.Carga_horaria)+ ") ultrapassa a carga horária estabelecida para o mesmo ("+ str(self.Funcionario.Carga_horaria)+")"})
+            
 
-        #Atualizando data do último cálculo
-        self.Projeto.Ultimo_calculo_horas = date.today()
+            #Atualizando a tabela de projetos
 
-        #Atualizando horas realizadas, horas totais realizadas e horas restantes para conclusão
-        self.Projeto.Horas_totais_realizadas += self.Carga_horaria
-        self.Projeto.Horas_realizadas = self.Projeto.Horas_totais_realizadas/self.Projeto.Semanas_Passadas
-        self.Projeto.Horas_conclusao -= self.Carga_horaria
+            if(projeto.Horas_conclusao-self.Carga_horaria < 0):
+                raise APIException({"Erro": "A carga horária da relação ultrapassa a carga horária restante para conclusão do projeto"})
 
-        self.Funcionario.save()            
-        self.Projeto.save()
+            #Atualizando a carga horária exercida do funcionario
+            funcionario.Carga_horaria_exercida += self.Carga_horaria
+
+            #Atualizando horas realizadas, horas totais realizadas e horas restantes para conclusão
+            projeto.Horas_totais_realizadas += self.Carga_horaria
+            projeto.Horas_realizadas = projeto.Horas_totais_realizadas/projeto.Semanas_Passadas
+            projeto.Horas_conclusao -= self.Carga_horaria
+
+            #Atualizando data do último cálculo
+            projeto.Ultimo_calculo_horas = date.today()
+
+        else:
+
+            relacao = RelacaoProjetoFuncionario.objects.get(Relacao_id=self.Relacao_id)
+            #Verificar se a carga_horaria total do funcionario não ultrapassa a carga_horária estabelecida para o dado funcionário
+            if(funcionario.Carga_horaria < (funcionario.Carga_horaria_exercida+self.Carga_horaria-relacao.Carga_horaria)):
+                raise APIException({"Erro": "A carga horária do funcionário ("+ str(funcionario.Carga_horaria_exercida+self.Carga_horaria-relacao.Carga_horaria)+ ") ultrapassa a carga horária estabelecida para o mesmo ("+ str(funcionario.Carga_horaria)+")"})
+
+            #Atualizando a tabela de projetos
+
+            if(projeto.Horas_conclusao-self.Carga_horaria+relacao.Carga_horaria < 0):
+                raise APIException({"Erro": "A carga horária da relação ultrapassa a carga horária restante para conclusão do projeto"})
+
+            #Atualizando a carga horária exercida do funcionario
+            funcionario.Carga_horaria_exercida += self.Carga_horaria-relacao.Carga_horaria
+
+            #Atualizando horas realizadas, horas totais realizadas e horas restantes para conclusão
+            projeto.Horas_totais_realizadas += self.Carga_horaria-relacao.Carga_horaria
+            projeto.Horas_realizadas = projeto.Horas_totais_realizadas/projeto.Semanas_Passadas
+            projeto.Horas_conclusao -= self.Carga_horaria+relacao.Carga_horaria
+
+            #Atualizando data do último cálculo
+            projeto.Ultimo_calculo_horas = date.today()
+
+        funcionario.save()            
+        projeto.save()
 
         super(RelacaoProjetoFuncionario, self).save(*args, **kwargs)
 

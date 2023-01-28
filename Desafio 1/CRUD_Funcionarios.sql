@@ -150,14 +150,15 @@ create procedure Empresa.delete_funcionario(query JSON)
 	END $$
 delimiter ;
 
-/*call Empresa.create_funcionario('{"Nome": "Amanda Lucio", "CPF": "145612553", "RG":"1556333", "Sexo": "F", 
+call Empresa.create_funcionario('{"Nome": "Amanda Lucio", "CPF": "145612553", "RG":"1556333", "Sexo": "F", 
 "Data_Nascimento":"25-06-2000", "Possui_habilitacao": true, "Salario":1500, "Carga_horaria":17.5}');
 call Empresa.create_funcionario('{"Nome": "Jose Silva", "CPF": "15612553", "RG":"15546333", "Sexo": "M", 
 "Data_Nascimento":"17-08-2003", "Possui_habilitacao": false, "Salario":1700, "Carga_horaria":20.5}');
-call Empresa.create_funcionario('{"Nome": "Roane Monteiro", "CPF": "445612553", "RG":"3556333", "Sexo": "NB", "Data_Nascimento":"09-09-2006", "Possui_habilitacao": true, "Salario":1300, "Carga_horaria":25}');
-call Empresa.create_funcionario('{"Nome": "Roane Silva", "CPF": "143612553", "RG":"36856333", "Sexo": "NB", "Data_Nascimento":"09-09-2006", "Possui_habilitacao": true, "Salario":1300, "Carga_horaria":25}');
+call Empresa.create_funcionario('{"Nome": "Roane Monteiro", "CPF": "445612553", "RG":"3556333", "Sexo": "F", "Data_Nascimento":"09-09-2006", "Possui_habilitacao": true, "Salario":1300, "Carga_horaria":25}');
+call Empresa.create_funcionario('{"Nome": "Roane Silva", "CPF": "143612553", "RG":"36856333", "Sexo": "F", "Data_Nascimento":"09-09-2006", "Possui_habilitacao": true, "Salario":1300, "Carga_horaria":25}');
+call Empresa.create_funcionario('{"Nome": "Suzana Costa", "CPF": "62233361", "RG":"1223354", "Sexo": "F", "Data_Nascimento":"09-09-2006", "Possui_habilitacao": true, "Salario":1300, "Carga_horaria":25}');
 call Empresa.read_funcionario('{"Funcionario_id": 1}');
 call Empresa.update_funcionario('{"Funcionario_id": 3, "Nome": "Roane Silveira"}');
-call Empresa.delete_funcionario('{"Funcionario_id": 4}');*/
+call Empresa.delete_funcionario('{"Funcionario_id": 4}');
 
 SELECT * FROM Empresa.Funcionarios;

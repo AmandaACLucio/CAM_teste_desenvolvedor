@@ -71,8 +71,7 @@ CREATE TABLE Empresa.Projetos (
     Horas_realizadas float,
     Ultimo_calculo_horas date,
     Horas_totais_realizadas float default 0,
-	FOREIGN KEY (Departamento_id) REFERENCES Empresa.Departamentos(Departamento_id) ON DELETE CASCADE,
-	FOREIGN KEY (Supervisor_id) REFERENCES Empresa.Funcionarios(Funcionario_id) ON DELETE CASCADE
+	FOREIGN KEY (Departamento_id) REFERENCES Empresa.Departamentos(Departamento_id) ON DELETE CASCADE
 );
 
 /*Relacoes_projetos_funcionarios*/

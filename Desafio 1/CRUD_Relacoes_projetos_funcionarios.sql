@@ -167,22 +167,44 @@ drop procedure if exists Empresa.delete_relacao_projeto_funcionario$$
 create procedure Empresa.delete_relacao_projeto_funcionario(query JSON)
 	BEGIN
 		DECLARE value_relacao_id INT default null;
+		DECLARE value_projeto_id INT default null;
+		DECLARE value_funcionario_id INT default null;
+		DECLARE value_carga_horaria FLOAT default null;
+        DECLARE semanas_passadas int default 1;
+		DECLARE value_ultimo_calculo_horas DATE default null;
         
 		set value_relacao_id = JSON_UNQUOTE(JSON_EXTRACT(query,'$.Relacao_id'));
         
         if (value_relacao_id is not null) then
 
+			SELECT Funcionario_id, Projeto_id, Carga_horaria INTO value_funcionario_id, value_projeto_id, value_carga_horaria FROM Empresa.Relacoes_projetos_funcionarios
+			WHERE Relacao_id = value_relacao_id;
+
+			SELECT Ultimo_calculo_horas INTO value_ultimo_calculo_horas
+			FROM Empresa.Projetos
+			WHERE Projeto_id = value_projeto_id;
+
+			set semanas_passadas = FLOOR(DATEDIFF(current_date(), value_ultimo_calculo_horas)/7);
+
             DELETE FROM Empresa.Relacoes_projetos_funcionarios  
             WHERE Relacao_id = value_relacao_id;
+			
+			UPDATE Empresa.Funcionarios SET Carga_horaria_exercida = Carga_horaria_exercida-value_carga_horaria
+			WHERE Funcionario_id = value_funcionario_id;
+
+			UPDATE Empresa.Projetos SET Horas_conclusao = Horas_conclusao+value_carga_horaria, 
+			Horas_totais_realizadas = Horas_totais_realizadas-value_carga_horaria, 
+			Horas_realizadas = (Horas_totais_realizadas-value_carga_horaria)/semanas_passadas, Ultimo_calculo_horas = current_date()
+			WHERE Projeto_id = value_projeto_id;
             
         end if;        
 	END $$
 delimiter ;
 
-call Empresa.create_relacao_projeto_funcionario('{"Projeto_id": 4, "Funcionario_id": 3, "Carga_horaria": 6}');
+call Empresa.create_relacao_projeto_funcionario('{"Projeto_id": 2, "Funcionario_id": 3, "Carga_horaria": 6}');
 call Empresa.create_relacao_projeto_funcionario('{"Projeto_id": 1, "Funcionario_id": 2, "Carga_horaria": 5.5}');
-call Empresa.create_relacao_projeto_funcionario('{"Projeto_id": 4, "Funcionario_id": 1, "Carga_horaria": 7.5}');
-call Empresa.read_relacao_projeto_funcionario('{"Relacao_id": 2}');*/
-call Empresa.update_relacao_projeto_funcionario('{"Relacao_id": 3, "Carga_horaria":7.5}');
+call Empresa.create_relacao_projeto_funcionario('{"Projeto_id": 3, "Funcionario_id": 5, "Carga_horaria": 7.5}');
+call Empresa.read_relacao_projeto_funcionario('{"Relacao_id": 2}');
+call Empresa.update_relacao_projeto_funcionario('{"Relacao_id": 3, "Carga_horaria":8.5}');
 call Empresa.delete_relacao_projeto_funcionario('{"Relacao_id": 2}');
 SELECT * FROM Empresa.Relacoes_projetos_funcionarios;

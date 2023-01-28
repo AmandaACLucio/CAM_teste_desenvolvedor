@@ -10,16 +10,41 @@ class RelacaoProjetoSupervisor(models.Model):
     Supervisor = models.ForeignKey(Funcionario , on_delete=models.CASCADE)
     Carga_horaria = models.FloatField(null=False, blank=False)   
 
+    #Função que caso o verbo seja DELETE, atualiza a carga horária exercida do funcionário e a carga horária restante do projeto
+    def delete(self, *args, **kwargs):
+            
+        supervisor = Funcionario.objects.get(Funcionario_id=self.Supervisor.Funcionario_id)
+
+        supervisor.Carga_horaria_exercida -= self.Carga_horaria 
+        supervisor.save()
+
+        super(RelacaoProjetoSupervisor, self).delete(*args, **kwargs)
+
+
+
     def save(self, *args, **kwargs):
     
+        supervisor = Funcionario.objects.get(Funcionario_id=self.Supervisor.Funcionario_id)
+
         #Verificar se a carga_horaria total do funcionario não ultrapassa a carga_horária estabelecida para o dado funcionário
-        
-        if(self.Supervisor.Carga_horaria < self.Supervisor.Carga_horaria_exercida+self.Carga_horaria):
-            raise APIException({"Erro": "A carga horária do funcionário ("+ str(self.Supervisor.Carga_horaria_exercida+self.Carga_horaria)+ ") ultrapassa a carga horária estabelecida para o mesmo ("+ str(self.Supervisor.Carga_horaria)+")"})
+
+        if (self.Relacao_id==None):
+    
+            if(supervisor.Carga_horaria < supervisor.Carga_horaria_exercida+self.Carga_horaria):
+                raise APIException({"Erro": "A carga horária do funcionário ("+ str(supervisor.Carga_horaria_exercida+self.Carga_horaria)+ ") ultrapassa a carga horária estabelecida para o mesmo ("+ str(supervisor.Carga_horaria)+")"})
+            
+            supervisor.Carga_horaria_exercida += self.Carga_horaria
+  
         else:
-            self.Supervisor.Carga_horaria_exercida += self.Carga_horaria
-            self.Supervisor.save()    
+
+            relacao = RelacaoProjetoSupervisor.objects.get(Relacao_id=self.Relacao_id)
+
+            if(supervisor.Carga_horaria < (supervisor.Carga_horaria_exercida+self.Carga_horaria-relacao.Carga_horaria)):
+                raise APIException({"Erro": "A carga horária do funcionário ("+ str(supervisor.Carga_horaria_exercida+self.Carga_horaria-relacao.Carga_horaria)+ ") ultrapassa a carga horária estabelecida para o mesmo ("+ str(supervisor.Carga_horaria)+")"})
+            
+            supervisor.Carga_horaria_exercida += self.Carga_horaria-relacao.Carga_horaria
         
+        supervisor.save()         
         super(RelacaoProjetoSupervisor, self).save(*args, **kwargs)
 
     def __str__(self):

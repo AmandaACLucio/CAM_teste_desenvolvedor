@@ -120,21 +120,30 @@ drop procedure if exists Empresa.delete_relacao_projeto_supervisor$$
 create procedure Empresa.delete_relacao_projeto_supervisor(query JSON)
 	BEGIN
 		DECLARE value_relacao_id INT default null;
+		DECLARE value_supervisor_id INT default null;
+		DECLARE value_carga_horaria FLOAT default null;
         
 		set value_relacao_id = JSON_UNQUOTE(JSON_EXTRACT(query,'$.Relacao_id'));
         
         if (value_relacao_id is not null) then
 
+
+			SELECT Supervisor_id, Carga_horaria INTO value_supervisor_id, value_carga_horaria FROM Empresa.Relacoes_projetos_supervisores
+			WHERE Relacao_id = value_relacao_id;
+
+			UPDATE Empresa.Funcionarios SET Carga_horaria_exercida = Carga_horaria_exercida-value_carga_horaria
+			WHERE Funcionario_id = value_supervisor_id;
+
             DELETE FROM Empresa.Relacoes_projetos_supervisores  
             WHERE Relacao_id = value_relacao_id;
-            
+
         end if;        
 	END $$
 delimiter ;
 
-/*call Empresa.create_relacao_projeto_supervisor('{"Projeto_id": 2, "Supervisor_id": 4, "Carga_horaria": 20.5}');
-call Empresa.create_relacao_projeto_supervisor('{"Projeto_id": 1, "Supervisor_id": 1, "Carga_horaria": 5.5}');*/
+call Empresa.create_relacao_projeto_supervisor('{"Projeto_id": 2, "Supervisor_id": 1, "Carga_horaria": 3.5}');
+call Empresa.create_relacao_projeto_supervisor('{"Projeto_id": 1, "Supervisor_id": 3, "Carga_horaria": 5.5}');
 call Empresa.read_relacao_projeto_supervisor('{"Relacao_id": 2}');
-call Empresa.update_relacao_projeto_supervisor('{"Relacao_id": 1, "Carga_horaria": 14.5}');
+call Empresa.update_relacao_projeto_supervisor('{"Relacao_id": 1, "Carga_horaria": 11.5}');
 call Empresa.delete_relacao_projeto_supervisor('{"Relacao_id": 2}');
 SELECT * FROM Empresa.Relacoes_projetos_supervisores;
