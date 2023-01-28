@@ -139,14 +139,14 @@ python manage.py migrate
 
 ### End-Points
 - api/departamentos/
-- api/departamentos/<int:Departamento_id>
+- api/departamentos/<int:Departamento_id>/
 - api/funcionarios/
-- api/funcionarios/<int:Funcionario_id>
+- api/funcionarios/<int:Funcionario_id>/
 - api/projetos/
-- api/projetos/<int:Funcionario_id>
+- api/projetos/<int:Funcionario_id>/
 - api/relacoesprojetosfuncionarios/
-- api/relacoesprojetosfuncionarios/<int:Relacao_id>
+- api/relacoesprojetosfuncionarios/<int:Relacao_id>/
 - api/relacoesprojetossupervisores/
-- api/relacoesprojetossupervisores/<int:Relacao_id>
+- api/relacoesprojetossupervisores/<int:Relacao_id>/
 
 ![Testando API no Postman](https://github.com/AmandaACLucio/CAM_teste_desenvolvedor/blob/master/Desafio%202/Postman.png)
