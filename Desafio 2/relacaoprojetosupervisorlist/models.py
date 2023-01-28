@@ -8,7 +8,7 @@ class RelacaoProjetoSupervisor(models.Model):
     Relacao_id = models.AutoField(primary_key=True)
     Projeto = models.OneToOneField(Projeto , on_delete=models.CASCADE)
     Supervisor = models.ForeignKey(Funcionario , on_delete=models.CASCADE)
-    Carga_horaria = models.FloatField(null=False, blank=False)
+    Carga_horaria = models.FloatField(null=False, blank=False)   
 
     def save(self, *args, **kwargs):
     

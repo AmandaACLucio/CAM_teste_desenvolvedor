@@ -3,6 +3,8 @@ delimiter $$
 	drop DATABASE if exists Empresa$$
 delimiter ;
 
+/*CREATE DATABASE Empresa;*/
+
 /*Removendo tabelas e procedures existentes*/
 delimiter $$
 	drop PROCEDURE if exists Empresa.create_projeto$$

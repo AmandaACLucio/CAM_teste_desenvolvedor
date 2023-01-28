@@ -11,7 +11,6 @@ class RelacaoProjetoFuncionario(models.Model):
     Funcionario = models.ForeignKey(Funcionario , on_delete=models.CASCADE)
     Carga_horaria = models.FloatField(null=False, blank=False)
 
-
     def save(self, *args, **kwargs):
 
         #Verificar se a carga_horaria total do funcionario não ultrapassa a carga_horária estabelecida para o dado funcionário
