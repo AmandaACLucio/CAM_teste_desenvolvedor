@@ -9,7 +9,7 @@
 
 Interpretando o problema foi notada que a quantidade de horas que um funcionário trabalha é igual a soma da quantidade de horas de projetos os quais ele superviosiona, juntamente com com a quantidade de horas de projetos os quais ele é funcionário. Sendo assim, são necessárias tabelas auxiliares para determinar a carga-horária dedicada a cada projeto supervisionada ou o qual o funcionário trabalho.
 
-Na tabela Projetos temos que que a quantidade de horas realizadas no projeto igual a quantidade à soma de horas de trabalho realizadas pelos funcionários (somente, sem o supervisor), dividido pelo número de semanas passadas desde a data do último cálculo, registrada no campo Ultimo_calculo_horas.
+Na tabela Projetos temos que que a quantidade de horas realizadas no projeto igual à soma de horas de trabalho realizadas pelos funcionários (somente, sem o supervisor), dividido pelo número de semanas passadas desde a data do último cálculo, registrada no campo Ultimo_calculo_horas.
 
 ## Desafio 1
 
@@ -124,6 +124,7 @@ Na tabela Projetos temos que que a quantidade de horas realizadas no projeto igu
 - pip3 install djangorestframework
 - pip3 install pymysql
 - pip3 install django-cors-headers
+- pip3 install datetime
 - mysql> CREATE DATABASE IF NOT EXISTS Empresa;
 
 ### Inserindo models no BD

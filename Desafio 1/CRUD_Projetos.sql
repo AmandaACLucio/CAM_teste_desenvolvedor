@@ -12,7 +12,7 @@ create procedure Empresa.create_projeto(query JSON)
 		DECLARE value_horas_conclusao float default null;
 		DECLARE value_prazo_estimado date default null;
 		DECLARE value_horas_realizadas float default null;
-		DECLARE value_ultimo_calculo_horas date default null;
+		DECLARE value_ultimo_calculo_horas date default current_date();
 
 		set value_departamento_id = JSON_UNQUOTE(JSON_EXTRACT(query,'$.Departamento_id'));
 		set value_supervisor_id = JSON_UNQUOTE(JSON_EXTRACT(query,'$.Supervisor_id'));
@@ -20,7 +20,6 @@ create procedure Empresa.create_projeto(query JSON)
 		set value_horas_conclusao = JSON_UNQUOTE(JSON_EXTRACT(query,'$.Horas_conclusao'));
 		set value_prazo_estimado = STR_TO_DATE(JSON_UNQUOTE(JSON_EXTRACT(query,'$.Prazo_estimado')),"%d-%m-%Y");
 		set value_horas_realizadas = JSON_UNQUOTE(JSON_EXTRACT(query,'$.Horas_realizadas'));
-		set value_ultimo_calculo_horas = STR_TO_DATE(JSON_UNQUOTE(JSON_EXTRACT(query,'$.Ultimo_calculo_horas')),"%d-%m-%Y");
         
         if (value_departamento_id is not null) AND (value_supervisor_id is not null) AND 
         (value_nome is not null) AND (value_horas_conclusao is not null) AND
@@ -75,7 +74,6 @@ create procedure Empresa.update_projeto(query JSON)
 		set value_horas_conclusao = JSON_UNQUOTE(JSON_EXTRACT(query,'$.Horas_conclusao'));
 		set value_prazo_estimado = STR_TO_DATE(JSON_UNQUOTE(JSON_EXTRACT(query,'$.Prazo_estimado')),"%d-%m-%Y");
 		set value_horas_realizadas = JSON_UNQUOTE(JSON_EXTRACT(query,'$.Horas_realizadas'));
-		set value_ultimo_calculo_horas = STR_TO_DATE(JSON_UNQUOTE(JSON_EXTRACT(query,'$.Ultimo_calculo_horas')),"%d-%m-%Y");
         
         if (value_projeto_id is not null) then
 
@@ -137,13 +135,13 @@ create procedure Empresa.delete_projeto(query JSON)
 delimiter ;
 
 
-call Empresa.create_projeto('{"Departamento_id": 1, "Supervisor_id": 1, "Nome": "CAM Back",  
+/*call Empresa.create_projeto('{"Departamento_id": 1, "Supervisor_id": 1, "Nome": "CAM SQL",  
 "Horas_conclusao": 54.5, "Prazo_estimado": "14-6-2023", "Horas_realizadas": 20.5, "Ultimo_calculo_horas": "14-1-2023"}');
-call Empresa.create_projeto('{"Departamento_id": 3, "Supervisor_id": 3, "Nome": "CAM Front",  
+call Empresa.create_projeto('{"Departamento_id": 3, "Supervisor_id": 3, "Nome": "CAM BD",  
 "Horas_conclusao": 37.5, "Prazo_estimado": "14-5-2023", "Horas_realizadas": 18.5, "Ultimo_calculo_horas": "11-1-2023"}');
-call Empresa.create_projeto('{"Departamento_id": 4, "Supervisor_id": 2, "Nome": "CAM Integration",  
+call Empresa.create_projeto('{"Departamento_id": 4, "Supervisor_id": 2, "Nome": "CAM Backoffice",  
 "Horas_conclusao": 27.5, "Prazo_estimado": "21-4-2023", "Horas_realizadas": 19.5, "Ultimo_calculo_horas": "9-1-2023"}');
 call Empresa.read_projeto('{"Projeto_id": 1}');
 call Empresa.update_projeto('{"Projeto_id": 2, "Departamento_id": 3, "Supervisor_id": 3}');
-call Empresa.delete_projeto('{"Projeto_id": 3}');
+call Empresa.delete_projeto('{"Projeto_id": 3}');*/
 SELECT * FROM Empresa.Projetos;

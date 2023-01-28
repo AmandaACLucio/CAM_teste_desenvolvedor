@@ -57,19 +57,20 @@ CREATE TABLE Empresa.Funcionarios (
     Data_nascimento date,
     Possui_habilitacao boolean,
     Salario float,
-    Carga_horaria float
+    Carga_horaria float,
+	Carga_horaria_exercida float default 0
 );
 
 /*Projetos*/
 CREATE TABLE Empresa.Projetos (
     Projeto_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Departamento_id int NOT NULL,
-    Supervisor_id int NOT NULL,
     Nome varchar(255) UNIQUE,
     Horas_conclusao float,
     Prazo_estimado date,
     Horas_realizadas float,
     Ultimo_calculo_horas date,
+    Horas_totais_realizadas float default 0,
 	FOREIGN KEY (Departamento_id) REFERENCES Empresa.Departamentos(Departamento_id) ON DELETE CASCADE,
 	FOREIGN KEY (Supervisor_id) REFERENCES Empresa.Funcionarios(Funcionario_id) ON DELETE CASCADE
 );
