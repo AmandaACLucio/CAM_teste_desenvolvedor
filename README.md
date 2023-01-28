@@ -126,7 +126,7 @@ Na tabela Projetos temos que que a quantidade de horas realizadas no projeto igu
 - pip3 install django-cors-headers==3.13.0
 - pip3 install datetime==5.0
 - mysql> CREATE DATABASE IF NOT EXISTS Empresa;
-- Insira os dados do database em [Desafio 2/empresaapi/settings.py](https://github.com/AmandaACLucio/CAM_teste_desenvolvedor/blob/master/Desafio%202/empresaapi/settings.py)
+- Insira os dados do database no projeto em [Desafio 2/empresaapi/settings.py](https://github.com/AmandaACLucio/CAM_teste_desenvolvedor/blob/master/Desafio%202/empresaapi/settings.py)
 ![Exemplo database](https://github.com/AmandaACLucio/CAM_teste_desenvolvedor/blob/master/Desafio%202/Database.png)
 
 
